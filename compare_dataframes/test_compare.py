@@ -3,7 +3,7 @@ import logging
 
 import pandas as pd
 
-from compare_dataframes import nrows_equal, ncols_equal,cols_equal, dtypes_equal, values_equal
+from compare_dataframes.compare_dataframes import nrows_equal, ncols_equal,cols_equal, dtypes_equal, values_equal
 
 logger = logging.getLogger('compare_dataframes')
 logger.setLevel(logging.ERROR)

@@ -10,10 +10,10 @@ def nrows_equal(a, b):
     nrowsb, _ = b.shape
 
     if nrowsa == nrowsb:
-        logger.info("Number of rows are equal {}".format(nrowsa))
+        logger.info("Number of rows are equal %s", nrowsa)
         return True
     else:
-        logger.warning("Number of rows differ {} vs {}".format(nrowsa, nrowsb))
+        logger.warning("Number of rows differ %s vs %s", nrowsa, nrowsb)
         return False
 
 
@@ -23,10 +23,10 @@ def ncols_equal(a, b):
     _, ncolsb = b.shape
 
     if ncolsa == ncolsb:
-        logger.info("Number of columns are equal {}".format(ncolsa))
+        logger.info("Number of columns are equal %s", ncolsa)
         return True
     else:
-        logger.warning("Number of columns differ {} vs {}".format(ncolsa, ncolsb))
+        logger.warning("Number of columns differ %s vs %s", ncolsa, ncolsb)
         return False
 
 
@@ -36,7 +36,7 @@ def cols_equal(a, b):
     columnsb = b.columns
 
     if np.array_equal(columnsa, columnsb):
-        logger.info(f"Column names are equal")
+        logger.info("Column names are equal")
         return True
     elif set(columnsa) == set(columnsb):
         logger.warning("Column names are equal but their order is different")
@@ -71,9 +71,8 @@ def values_equal(a, b, orderby):
     if all(columns):
         logger.info("For every column all values are equal (up to row ordering)")
         return True
-    else:
-        columns = a.columns[columns==False]
-        logger.info("Column(s): {columns} have differing values", columns)
+    else:        
+        logger.info("Columns have differing values")
         return False
 
 

@@ -1,14 +1,13 @@
-
-setup:
-    python -m venv .venv
+setup: 
+	python3 -m venv .venv
 
 install:
-	python -m pip install --upgrade pip
-	python -m pip install -r requirements.txt
+	python3 -m pip install --upgrade pip 
+	python3 -m pip install -r requirements.txt  
 
 lint:
-	pylint --disable=R,C compare_dataframe.py, main.py
+	pylint --disable=R,C compare_dataframes
 
 test:
-	python -m pytest -vv --cov=compare_dataframe compare_dataframe.py
-	    
+	python3 -m pytest -vv --cov=compare_dataframes compare_dataframes
+
