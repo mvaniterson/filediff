@@ -59,20 +59,30 @@ def dtypes_equal(a, b):
         return False
 
 
-def values_equal(a, b, orderby):
-
-    a = a.sort_values(by=orderby).reset_index()
-    b = b.sort_values(by=orderby).reset_index()
+def values_equal(a, b, orderby=None):
+    
+    if orderby:
+        a = a.sort_values(by=orderby).reset_index(drop=True)
+        b = b.sort_values(by=orderby).reset_index(drop=True)
 
     columns = []
     for c in a.columns:
-        columns.append(a[c].equals(b[c]))
+        if a[c].dtype == np.float64:
+            eq = np.allclose(a[c], b[c], rtol=1e-05, atol=1e-08, equal_nan=False)
+        else:
+            eq = np.array_equal(a[c].values, b[c].values, equal_nan=False)
+        columns.append(eq)
+        
+        if eq == False and a[c].dtype == np.float64:
+            print(c)
+            print(a[a[c] != b[c]][c].head())
+            print(b[a[c] != b[c]][c].head())
 
     if all(columns):
         logger.info("For every column all values are equal (up to row ordering)")
         return True
-    else:        
-        logger.info("Columns have differing values")
+    else:                        
+        logger.info("Columns %s have differing values", ', '.join(a.columns[columns]))
         return False
 
 
@@ -83,6 +93,11 @@ def compare_dataframes(a, b, orderby):
         if not test(a, b):
             logging.error('DataFrames differ')
             return False
+        
+    if not values_equal(a, b, orderby):
+        logging.error('DataFrames differ')
+        return False
+    
     logging.info('DataFrames are equal')
     return True
 

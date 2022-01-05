@@ -6,22 +6,30 @@ import click
 
 import pandas as pd
 
+from pandas._testing import assert_frame_equal
+
 from compare_dataframes import compare_dataframes
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
 @click.group()
-@click.command("file 1")
-@click.option("--file1", type=click.Path(exists=True), help="path to file 1")
-@click.command("file 2")
-@click.option("--file2", type=click.Path(exists=True), help="path to file 2")
-@click.command("orderby")
-@click.option("--orderby", help="order dataframe by specified column")
-def cli(file1, file2, orderby):
-
-    df1 = pd.read_csv(file1)
-    df2 = pd.read_csv(file2)
+@click.version_option("1.0.0")
+def cli():
+    """Compare two files for equality"""
+    
+@cli.command("compare")
+@click.option("--file1", type=click.Path(exists=True), help="Path to file 1")
+@click.option("--file2", type=click.Path(exists=True), help="Path to file 2")
+@click.option("--orderby", default=None, help="Optionally order dataframe by specified column")
+def readandcompare(file1, file2, orderby):
+    
+    click.echo(click.style(f"Filename 1:{file1}"))
+    click.echo(click.style(f"Filename 2:{file2}"))
+                           
+    df1 = pd.read_csv(file1, low_memory=False)
+    df2 = pd.read_csv(file2, low_memory=False)    
+    
     compare_dataframes(df1, df2, orderby=orderby)
 
 
