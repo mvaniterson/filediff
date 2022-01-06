@@ -1,5 +1,8 @@
+
+SHELL := /bin/bash
+
 setup: 
-	python3 -m venv .venv
+	python3 -m venv .venv && source .venv/bin/activate
 
 install:
 	python3 -m pip install --upgrade pip 
