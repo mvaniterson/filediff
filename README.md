@@ -1,1 +1,1 @@
-# toy project to explore github actions etc.
+# toy project to explore github actions/ci.
