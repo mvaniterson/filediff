@@ -1,1 +1,1 @@
-# project_template
+# toy project to explore github actions etc.

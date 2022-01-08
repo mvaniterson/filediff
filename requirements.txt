@@ -1,6 +1,1 @@
-pandas
-numpy
-click
-pytest
-pytest-cov
-pylint
+.
