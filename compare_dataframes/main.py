@@ -6,9 +6,7 @@ import click
 
 import pandas as pd
 
-from pandas._testing import assert_frame_equal
-
-from compare_dataframes import compare_dataframes
+from compare_dataframes.compare_dataframes import compare_dataframes
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
