@@ -10,7 +10,7 @@ install:
 
 lint:
 	pylint src
-	pylint tests
+	pylint --disable=R,C tests
 
 test:
 	pytest -vv --cov=tests tests
