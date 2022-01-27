@@ -92,10 +92,8 @@ class TestCompareDataFrames(unittest.TestCase):
             values_equal(self.dataframe_a, self.dataframe_h, orderby="col_1")
         )
         
-    def test_get_differences(self):
-        
-        columns = [True, False, False]
-        dataframe_c = get_differences(self.dataframe_a, self.dataframe_h, columns)                
+    def test_get_differences(self):        
+        dataframe_c = get_differences(self.dataframe_a, self.dataframe_h)                
         print(dataframe_c)
         print(self.dataframe_i)
         self.assertTrue(
