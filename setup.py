@@ -10,8 +10,8 @@ setup(
     file-differ=filediffer:filediffer
     """,
     install_requires = ['click==8.0.3',
-                        'numpy==1.22.0',
-                        'pandas==1.3.5',
+                        'numpy>1.9.0',
+                        'pandas>1.2.5',
                         'pylint==2.12.2',
                         'pytest==6.2.5',
                         'pytest-cov==3.0.0'],

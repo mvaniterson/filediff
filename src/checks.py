@@ -1,6 +1,7 @@
 """Checks to compare two DataFrames"""
 import logging
 import numpy as np
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -59,6 +60,21 @@ def dtypes_equal(dataframe_a, dataframe_b):
     logger.warning("dtypes of columns differ")
     return False
 
+def get_differences(dataframe_a, dataframe_b):
+    """Show the differences between two DataFrames"""
+        
+    dataframe_a.columns = [col + '_file1' for col in dataframe_a.columns] 
+    dataframe_b.columns = [col + '_file2' for col in dataframe_b.columns] 
+    
+    dataframe_c = pd.concat([dataframe_a.reset_index(drop=True), dataframe_b], axis=1)
+    
+    dataframe_c['differences'] = False
+    for col in dataframe_a.columns:        
+        dataframe = dataframe_c[[col, col.replace('_file1', '_file2')]]
+        dataframe_c['differences'] += dataframe.iloc[:, 0] != dataframe.iloc[:, 1]
+    
+    return dataframe_c[dataframe_c['differences']]
+    
 
 def values_equal(dataframe_a, dataframe_b, orderby=None):
     """check if values are equal between two DataFrames"""
@@ -89,6 +105,13 @@ def values_equal(dataframe_a, dataframe_b, orderby=None):
     logger.info(
         "Columns %s have differing values", ", ".join(dataframe_a.columns[columns])
     )
+    
+    dataframe_c = get_differences(dataframe_a, dataframe_b)
+
+    logging.info('There are %s differences', str(dataframe_c['differences'].sum()))    
+    logger.info('Differences head - %s',  dataframe_c.head())
+    
+    
     return False
 
 
